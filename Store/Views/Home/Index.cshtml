@@ -1,0 +1,26 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IPagedList<Store.Models.Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@product.Image" alt="Product Image" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Price: @product.Price.ToString("C")</p>
+                    <p class="card-text">Category: @product.Category.Name</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>
