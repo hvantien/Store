@@ -5,32 +5,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="banner-section mt-100 overflow-hidden">
+    <div class="banner-section-inner">
+        <div class="container">
+            <div class="row justify-content-center">
+                @foreach(var item in Model)
+                {
+                    <div class="col-lg-6 col-md-6 col-12" data-aos="fade-right" data-aos-duration="1200">
+                        <a class="banner-item position-relative rounded" href="collection-left-sidebar.html">
+                            <img class="banner-img" src="~/img/botAvatar.png" alt="banner-1">
+                            <div class="content-absolute content-slide">
+                                <div class="container height-inherit d-flex align-items-center">
+                                    <div class="content-box banner-content p-4">
+                                        <h2 class="heading_34 text-white">@item.Name</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
