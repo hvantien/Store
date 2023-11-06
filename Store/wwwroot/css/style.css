@@ -4,6 +4,9 @@ body {
 }
 
 /* ============= css related to chats =============== */
+img.primary-img {
+  height: 400px !important;
+}
 
 .widget {
   display: none;
