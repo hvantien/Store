@@ -5,7 +5,7 @@ using Store.Models;
 
 namespace Store.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -72,6 +72,56 @@ namespace Store.Controllers
 
             // Xử lý khi xóa không thành công
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Chuyển đổi thông tin người dùng thành một mô hình chỉnh sửa
+            var editModel = new CreateUserViewModel
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                FullName = user.FullName,
+                Email = user.Email
+            };
+
+            return View(editModel);
+        }
+
+        // Action để xử lý việc cập nhật thông tin người dùng
+        [HttpPost]
+        public async Task<IActionResult> Edit(CreateUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Cập nhật thông tin người dùng từ mô hình chỉnh sửa
+            user.UserName = model.UserName;
+            user.FullName = model.FullName;
+            user.Email = model.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
         }
     }
 }

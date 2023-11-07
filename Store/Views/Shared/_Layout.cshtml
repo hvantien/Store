@@ -260,12 +260,9 @@
                 <!--Add the name of the bot here -->
                 <span class="chat_header_title">Bot</span>
 
-                <!-- Dropdown menu-->
-                <ul id="dropdown1" class="dropdown-content">
-                    <li><a href="#" id="clear">Clear</a></li>
-                    <li><a href="#" id="restart">Restart</a></li>
-                    <li><a href="#" id="close">Close</a></li>
-                </ul>
+                <a href="#" id="closeButton" class="close-button" style="float: right;">
+                    <i class="fa fa-times" style="color: white;"></i>
+                </a>
             </div>
 
             <!--Chatbot contents goes here -->
@@ -997,6 +994,16 @@
         <!--Chart.js Script -->
         <script type="text/javascript" src="~/js/lib/chart.min.js"></script>
         <script type="text/javascript" src="~/js/lib/showdown.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Xử lý sự kiện khi nút đóng được nhấn
+                $("#closeButton").click(function () {
+                    // Ẩn chat widget
+                    $(".widget").hide();
+                    $(".profile_div").show();
+                });
+            });
+        </script>
         @await RenderSectionAsync("Scripts", required: false)
     </div>
 </body>
