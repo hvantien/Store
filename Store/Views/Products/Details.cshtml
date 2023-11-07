@@ -1,9 +1,15 @@
 ﻿@model Store.Models.Product
 
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 
 <div class="product-page mt-100">
     <div class="container">
@@ -130,6 +136,12 @@
                         <div class="buy-it-now-btn mt-2">
                             <button type="submit" class="position-relative btn-atc btn-buyit-now">BUY IT
                                 NOW</button>
+                        </div>
+                        <div class="buy-it-now-btn mt-2">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a class="position-relative btn-atc bg-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+                            }
                         </div>
                     </form>
                 </div>

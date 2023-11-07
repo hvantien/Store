@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Store.Data;
+using Store.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +13,45 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddDefaultIdentity<ApplicationUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
+    if (!roleManager.RoleExistsAsync("Admin").Result)
+    {
+        var adminRole = new IdentityRole("Admin");
+        roleManager.CreateAsync(adminRole).Wait();
+    }
+
+    var user = userManager.FindByNameAsync("admin1@gmail.com").Result;
+    if (user == null)
+    {
+        user = new ApplicationUser
+        {
+            EmailConfirmed = true,
+            UserName = "admin1@gmail.com",
+            Email = "admin1@gmail.com"
+        };
+
+        var result = userManager.CreateAsync(user, "Baomat1245@").Result;
+        if (result.Succeeded)
+        {
+            userManager.AddToRoleAsync(user, "Admin").Wait();
+        }
+    }
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -27,7 +60,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

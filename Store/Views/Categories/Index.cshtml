@@ -4,27 +4,27 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2>Category</h2>
 
-<div class="banner-section mt-100 overflow-hidden">
-    <div class="banner-section-inner">
-        <div class="container">
-            <div class="row justify-content-center">
-                @foreach(var item in Model)
-                {
-                    <div class="col-lg-6 col-md-6 col-12" data-aos="fade-right" data-aos-duration="1200">
-                        <a class="banner-item position-relative rounded" href="collection-left-sidebar.html">
-                            <img class="banner-img" src="~/img/botAvatar.png" alt="banner-1">
-                            <div class="content-absolute content-slide">
-                                <div class="container height-inherit d-flex align-items-center">
-                                    <div class="content-box banner-content p-4">
-                                        <h2 class="heading_34 text-white">@item.Name</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                }
-            </div>
+<a asp-action="Create" class="btn btn-primary btn-sm">Create New</a>
+
+@foreach (var item in Model)
+{
+    <div class="mb-3">
+        <div class="d-flex align-items-center">
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" asp-controller="Categories" asp-route-id="@item.Id" class="btn btn-primary btn-sm ml-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a asp-action="Delete" asp-controller="Categories" asp-route-id="@item.Id" class="btn btn-danger btn-sm ml-2">
+                    <i class="fas fa-trash-alt"></i>
+            </a>
+            }
+            <a asp-action="Index" asp-controller="Products" asp-route-categoryId="@item.Id" class="btn btn-link text-dark">
+                <h6>@item.Name</h6>
+            </a>
         </div>
     </div>
-</div>
+}
+

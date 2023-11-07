@@ -15,7 +15,7 @@
         cartItems = new List<CartItem>(); // Tạo danh sách mặc định nếu không có cookie
     }
 
-    // Lấy tổng số lượng từ danh sách CartItem
+     //Lấy tổng số lượng từ danh sách CartItem
     int totalQuantity = cartItems.Sum(item => item.Quantity);
 }
 <!doctype html>
@@ -37,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
           rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <!-- all css -->
     <style>
@@ -156,6 +156,10 @@
                                                     <a class="nav-link-sub nav-text-sub" asp-area="" asp-controller="Categories" asp-action="Index">
                                                         Category
                                                     </a>
+                                                </li>
+
+                                                <li class="menu-list-item nav-item-sub">
+                                                    <a class="nav-link-sub nav-text-sub" asp-area="" asp-controller="User" asp-action="Index">User</a>
                                                 </li>
                                             </ul>
                                         </div>

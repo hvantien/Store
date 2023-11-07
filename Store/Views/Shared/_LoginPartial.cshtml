@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     var user = Context.User.Identity.Name;
@@ -34,7 +34,6 @@
                         <span>Register</span>
                     </a>
     }else{
-        <li class="nav-item">
             <a class="announcement-login announcement-text text-white" href="#">
                         <svg class="icon icon-user" width="10" height="11" viewBox="0 0 10 11" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +43,11 @@
                                     <span>Xin chào, @user</span>
 
                     </a>
-        </li>
+
+
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit">Logout</button>
+                    </form>
     }
             
         </div>
