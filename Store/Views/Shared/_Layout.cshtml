@@ -3,20 +3,20 @@
 @{
     var context = HttpContextAccessor.HttpContext;
     var cookieName = "Cart"; // Thay thế bằng tên cookie thực tế bạn muốn đếm
-    var cartItemsJson = context.Request.Cookies[cookieName];
-    List<CartItem> cartItems;
+    var OrderItemsJson = context.Request.Cookies[cookieName];
+    List<OrderItem> OrderItems;
 
-    if (!string.IsNullOrEmpty(cartItemsJson))
+    if (!string.IsNullOrEmpty(OrderItemsJson))
     {
-        cartItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CartItem>>(cartItemsJson);
+        OrderItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<OrderItem>>(OrderItemsJson);
     }
     else
     {
-        cartItems = new List<CartItem>(); // Tạo danh sách mặc định nếu không có cookie
+        OrderItems = new List<OrderItem>(); // Tạo danh sách mặc định nếu không có cookie
     }
 
-     //Lấy tổng số lượng từ danh sách CartItem
-    int totalQuantity = cartItems.Sum(item => item.Quantity);
+     //Lấy tổng số lượng từ danh sách OrderItem
+    int totalQuantity = OrderItems.Sum(item => item.Quantity);
 }
 <!doctype html>
 <html lang="en" class="no-js">
@@ -160,6 +160,10 @@
 
                                                 <li class="menu-list-item nav-item-sub">
                                                     <a class="nav-link-sub nav-text-sub" asp-area="" asp-controller="User" asp-action="Index">User</a>
+                                                </li>
+
+                                                <li class="menu-list-item nav-item-sub">
+                                                    <a class="nav-link-sub nav-text-sub" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
                                                 </li>
                                             </ul>
                                         </div>

@@ -1,4 +1,4 @@
-@model List<Store.Models.CartItem>
+@model List<Store.Models.OrderItem>
 
 @{
     ViewData["Title"] = "Edit";
@@ -71,7 +71,7 @@
                                 </div>
                                 <p class="shipping_text">Shipping & taxes calculated at checkout</p>
                                 <div class="d-flex justify-content-center mt-4">
-                                    <a href="checkout.html" class="position-relative btn-primary text-uppercase">
+                                    <a asp-action="Create" asp-controller="Order" class="position-relative btn-primary text-uppercase">
                                         Procced to checkout
                                     </a>
                                 </div>

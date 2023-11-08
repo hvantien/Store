@@ -1,0 +1,62 @@
+﻿@model Order
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create Order";
+    var context = HttpContextAccessor.HttpContext;
+    var cookieName = "Cart";
+    var OrderItemsJson = context.Request.Cookies[cookieName];
+    List<OrderItem> OrderItems;
+
+    if (!string.IsNullOrEmpty(OrderItemsJson))
+    {
+        OrderItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<OrderItem>>(OrderItemsJson);
+    }
+    else
+    {
+        OrderItems = new List<OrderItem>(); // Tạo danh sách mặc định nếu không có cookie
+    }
+
+    //Lấy tổng số lượng từ danh sách OrderItem
+    int totalQuantity = OrderItems.Sum(item => item.Quantity);
+}
+
+<h2>Create Order</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="CustomerName">Customer Name:</label>
+        <input asp-for="CustomerName" class="form-control" />
+        <span asp-validation-for="CustomerName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CustomerEmail">Customer Email:</label>
+        <input asp-for="CustomerEmail" class="form-control" />
+        <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ShippingAddress">Shipping Address:</label>
+        <input asp-for="ShippingAddress" class="form-control" />
+        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ShippingCity">Shipping City:</label>
+        <input asp-for="ShippingCity" class="form-control" />
+        <span asp-validation-for="ShippingCity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ShippingPostalCode">Shipping Postal Code:</label>
+        <input asp-for="ShippingPostalCode" class="form-control" />
+        <span asp-validation-for="ShippingPostalCode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <partial name="_OrderItemsPartial" model="OrderItems" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Order</button>
+</form>

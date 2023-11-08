@@ -30,21 +30,20 @@ namespace Store.Controllers
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Detail(int? id)
         {
-            if (id == null || _context.Categories == null)
+            // Lấy thông tin chi tiết về đơn hàng dựa trên id và bao gồm danh sách các mục đơn hàng
+            var order = _context.Orders
+                .Include(o => o.Items)
+                .FirstOrDefault(o => o.OrderId == id);
+
+            if (order == null)
             {
+                // Xử lý trường hợp đơn hàng không tồn tại
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            return View(order);
         }
 
         // GET: Categories/Create

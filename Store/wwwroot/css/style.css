@@ -1,4 +1,4 @@
-body {
+﻿body {
   font-family: "Open Sans", sans-serif;
   background-size: cover;
 }
@@ -6,6 +6,21 @@ body {
 /* ============= css related to chats =============== */
 img.primary-img {
   height: 400px !important;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-list-item {
+    display: inline-block;
+    margin-right: 10px; /* Thay đổi khoảng cách giữa các mục menu nếu cần */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #000; /* Màu chữ của mục menu */
 }
 
 .widget {

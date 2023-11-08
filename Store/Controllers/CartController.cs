@@ -5,50 +5,50 @@ using Store.Models;
 public class CartController : Controller
 {
     [HttpPost]
-    public IActionResult AddToCart(CartItem item)
+    public IActionResult AddToCart(OrderItem item)
     {
-        List<CartItem> cartItems;
+        List<OrderItem> OrderItems;
         var existingCart = Request.Cookies["Cart"];
 
         if (!string.IsNullOrEmpty(existingCart))
         {
-            cartItems = JsonConvert.DeserializeObject<List<CartItem>>(existingCart);
+            OrderItems = JsonConvert.DeserializeObject<List<OrderItem>>(existingCart);
         }
         else
         {
-            cartItems = new List<CartItem>();
+            OrderItems = new List<OrderItem>();
         }
 
-        cartItems.Add(item);
-        Response.Cookies.Append("Cart", JsonConvert.SerializeObject(cartItems));
+        OrderItems.Add(item);
+        Response.Cookies.Append("Cart", JsonConvert.SerializeObject(OrderItems));
 
         return Redirect(Request.Headers["Referer"].ToString());
     }
 
     public IActionResult Index()
     {
-        var cartItems = new List<CartItem>();
+        var OrderItems = new List<OrderItem>();
         var existingCart = Request.Cookies["Cart"];
 
         if (!string.IsNullOrEmpty(existingCart))
         {
-            cartItems = JsonConvert.DeserializeObject<List<CartItem>>(existingCart);
+            OrderItems = JsonConvert.DeserializeObject<List<OrderItem>>(existingCart);
         }
 
-        return View(cartItems);
+        return View(OrderItems);
     }
 
     [HttpPost]
     public IActionResult RemoveFromCart(int productId)
     {
-        var cartItems = new List<CartItem>();
+        var OrderItems = new List<OrderItem>();
         var existingCart = Request.Cookies["Cart"];
 
         if (!string.IsNullOrEmpty(existingCart))
         {
-            cartItems = JsonConvert.DeserializeObject<List<CartItem>>(existingCart);
-            cartItems.RemoveAll(item => item.ProductId == productId);
-            Response.Cookies.Append("Cart", JsonConvert.SerializeObject(cartItems));
+            OrderItems = JsonConvert.DeserializeObject<List<OrderItem>>(existingCart);
+            OrderItems.RemoveAll(item => item.ProductId == productId);
+            Response.Cookies.Append("Cart", JsonConvert.SerializeObject(OrderItems));
         }
 
         return RedirectToAction("Index");
