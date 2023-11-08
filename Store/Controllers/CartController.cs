@@ -53,4 +53,27 @@ public class CartController : Controller
 
         return RedirectToAction("Index");
     }
+
+    [HttpPost]
+    public IActionResult EditFromCart(int productId, int newQuantity)
+    {
+        var OrderItems = new List<OrderItem>();
+        var existingCart = Request.Cookies["Cart"];
+
+        if (!string.IsNullOrEmpty(existingCart))
+        {
+            OrderItems = JsonConvert.DeserializeObject<List<OrderItem>>(existingCart);
+
+            var itemToEdit = OrderItems.FirstOrDefault(item => item.ProductId == productId);
+
+            if (itemToEdit != null)
+            {
+                itemToEdit.Quantity = newQuantity;
+
+                Response.Cookies.Append("Cart", JsonConvert.SerializeObject(OrderItems));
+            }
+        }
+
+        return RedirectToAction("Index");
+    }
 }

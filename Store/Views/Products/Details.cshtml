@@ -96,31 +96,34 @@
                     <div class="product-vendor product-meta mb-3">
                         <strong class="label">Category:</strong> @Model.Category.Name
                     </div>
-
+                    <div class="misc d-flex align-items-end justify-content-between mt-4">
+                        <div class="quantity d-flex align-items-center justify-content-between">
+                            <button class="qty-btn dec-qty">
+                                <img src="~/template/store/assets/img/icon/minus.svg"
+                                     alt="minus">
+                            </button>
+                            <input class="qty-input" type="number" name="Quantity1" value="1" min="0">
+                            <button class="qty-btn inc-qty">
+                                <img src="~/template/store/assets/img/icon/plus.svg"
+                                     alt="plus">
+                            </button>
+                        </div>
+                        <div class="message-popup d-flex align-items-center">
+                            <span class="message-popup-icon">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.5 4.25V16.25H4.5V20.0703L5.71875 19.0859L9.25781 16.25H16.5V4.25H1.5ZM3 5.75H15V14.75H8.74219L8.53125 14.9141L6 16.9297V14.75H3V5.75ZM18 7.25V8.75H21V17.75H18V19.9297L15.2578 17.75H9.63281L7.75781 19.25H14.7422L19.5 23.0703V19.25H22.5V7.25H18Z"
+                                          fill="black" />
+                                </svg>
+                            </span>
+                            <span class="message-popup-text ms-2">Message</span>
+                        </div>
+                    </div>
                     <form asp-controller="Cart" asp-action="AddToCart" method="post">
                         <input type="hidden" name="ProductId" value="@Model.Id" />
                         <input type="hidden" name="ProductName" value="@Model.Name" />
                         <input type="hidden" name="Price" value="@Model.Price" />
-                        <div class="misc d-flex align-items-end justify-content-between mt-4">
-                            <div class="quantity d-flex align-items-center justify-content-between">
-                                <button class="qty-btn dec-qty"><img src="~/template/store/assets/img/icon/minus.svg"
-                                        alt="minus"></button>
-                                <input class="qty-input" type="number" name="Quantity" value="1" min="0">
-                                <button class="qty-btn inc-qty"><img src="~/template/store/assets/img/icon/plus.svg"
-                                        alt="plus"></button>
-                            </div>
-                            <div class="message-popup d-flex align-items-center">
-                                <span class="message-popup-icon">
-                                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M1.5 4.25V16.25H4.5V20.0703L5.71875 19.0859L9.25781 16.25H16.5V4.25H1.5ZM3 5.75H15V14.75H8.74219L8.53125 14.9141L6 16.9297V14.75H3V5.75ZM18 7.25V8.75H21V17.75H18V19.9297L15.2578 17.75H9.63281L7.75781 19.25H14.7422L19.5 23.0703V19.25H22.5V7.25H18Z"
-                                            fill="black" />
-                                    </svg>
-                                </span>
-                                <span class="message-popup-text ms-2">Message</span>
-                            </div>
-                        </div>
+                        <input class="qty-input" type="hidden" name="Quantity" value="1" min="0">
                         <div class="product-form-buttons d-flex align-items-center justify-content-between mt-4">
                             <button type="submit" class="position-relative btn-atc btn-add-to-cart loader">ADD TO
                                 CART</button>
@@ -132,10 +135,6 @@
                                         fill="#00234D"></path>
                                 </svg>
                             </a>
-                        </div>
-                        <div class="buy-it-now-btn mt-2">
-                            <button type="submit" class="position-relative btn-atc btn-buyit-now">BUY IT
-                                NOW</button>
                         </div>
                         <div class="buy-it-now-btn mt-2">
                             @if (User.IsInRole("Admin"))
@@ -183,3 +182,41 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            const qtyInputNumber = $("input[name='Quantity1']");
+            const qtyInputHidden = $("input[name='Quantity']");
+
+            qtyInputNumber.on("change", function () {
+                // Lấy giá trị mới từ input number
+                const newValue = qtyInputNumber.val();
+                console.log(newValue);
+
+                // Gán giá trị mới cho input hidden
+                qtyInputHidden.val(newValue);
+            });
+
+            $(".qty-btn.inc-qty").click(function () {
+                // Tăng giá trị của input number lên
+                const newValue = qtyInputNumber.val();
+                console.log(newValue);
+
+                // Gán giá trị mới cho input hidden
+                qtyInputHidden.val(newValue);
+            });
+
+            // Bắt sự kiện khi nút dec-qty được nhấn
+            $(".qty-btn.dec-qty").click(function () {
+                const newValue = qtyInputNumber.val();
+                console.log(newValue);
+
+                // Gán giá trị mới cho input hidden
+                qtyInputHidden.val(newValue);
+            });
+        });
+
+
+
+    </script>
+}

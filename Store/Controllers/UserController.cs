@@ -5,7 +5,7 @@ using Store.Models;
 
 namespace Store.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

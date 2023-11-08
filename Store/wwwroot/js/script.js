@@ -1,5 +1,5 @@
-/// <reference path="components/index.js" />
-/// <reference path="components/index.js" />
+/// <reference path="/components/index.js" />
+/// <reference path="/components/index.js" />
 
 /* module for importing other js files */
 function include(file) {
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* import components */
-include('./js/components/index.js');
+include('~/js/components/index.js');
 
 window.addEventListener('load', () => {
   // initialization

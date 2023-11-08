@@ -983,6 +983,7 @@
         </div>
         <!-- product quickview end -->
         <!-- all js -->
+        </script>
         <script src="~/template/store/assets/js/vendor.js"></script>
         <script src="~/template/store/assets/js/main.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -993,7 +994,7 @@
                 src="~/js/lib/materialize.min.js"></script>
         <script src="~/js/lib/uuid.min.js"></script>
         <!--Main Script -->
-        <script type="text/javascript" src="~/js/script.js"></script>
+        @*<script type="text/javascript" src="~/js/script.js"></script>*@
 
         <!--Chart.js Script -->
         <script type="text/javascript" src="~/js/lib/chart.min.js"></script>
@@ -1006,7 +1007,6 @@
                     $(".widget").hide();
                     $(".profile_div").show();
                 });
-            });
         </script>
         @await RenderSectionAsync("Scripts", required: false)
     </div>

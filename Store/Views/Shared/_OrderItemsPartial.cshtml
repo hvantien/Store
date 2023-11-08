@@ -1,23 +1,35 @@
 ﻿@model List<OrderItem>
 
 <h3>Order Items</h3>
+
+@{
+    // Sử dụng LINQ để nhóm các mục theo ProductId và tính tổng
+    var groupedItems = Model.GroupBy(item => item.ProductId, (key, group) => new
+    {
+        ProductId = key,
+        ProductName = group.Select(item => item.ProductName).FirstOrDefault(), // Lấy giá trị ProductName đầu tiên trong group
+        TotalQuantity = group.Sum(item => item.Quantity),
+        TotalPrice = group.Sum(item => item.Quantity * item.Price)
+    });
+}
+
 <table class="table">
     <thead>
         <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Total Quantity</th>
             <th>Total Price</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var group in groupedItems)
         {
             <tr>
-                <td>@item.ProductName</td>
-                <td>@item.Quantity</td>
-                <td>@item.Price</td>
-                <td>@(item.Quantity * item.Price)</td>
+                <td>@group.ProductId</td>
+                <td>@group.ProductName</td>
+                <td>@group.TotalQuantity</td>
+                <td>@group.TotalPrice</td>
             </tr>
         }
     </tbody>
