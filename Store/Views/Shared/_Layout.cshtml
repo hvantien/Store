@@ -994,7 +994,7 @@
                 src="~/js/lib/materialize.min.js"></script>
         <script src="~/js/lib/uuid.min.js"></script>
         <!--Main Script -->
-        @*<script type="text/javascript" src="~/js/script.js"></script>*@
+        <script type="text/javascript" src="~/js/script.js"></script>
 
         <!--Chart.js Script -->
         <script type="text/javascript" src="~/js/lib/chart.min.js"></script>
@@ -1006,7 +1006,8 @@
                     // Ẩn chat widget
                     $(".widget").hide();
                     $(".profile_div").show();
-                });
+                })
+            });
         </script>
         @await RenderSectionAsync("Scripts", required: false)
     </div>
