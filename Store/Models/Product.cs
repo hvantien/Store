@@ -9,6 +9,7 @@
 
         public string Image { get; set; }
         public Category Category { get; set; }
+        public string Description { get; set; }
     }
 
 }
