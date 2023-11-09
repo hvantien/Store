@@ -53,7 +53,7 @@ namespace Store.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
+            ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
